@@ -31,7 +31,7 @@ app.get("/watch", async (req, res) => {
     ];
     res.header({
       "Content-Type": "text/html",
-      "Max-Age": 1 * 60 * 60 * 24 * 30,
+      "Cache-Control": `s-maxage: ${1 * 60 * 60 * 24 * 30}`,
     });
     res.send(
       `<!DOCTYPE html>
