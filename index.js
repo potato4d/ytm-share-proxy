@@ -60,6 +60,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(3000, "0.0.0.0", () => {
+app.listen(process.env.PORT || 3000, "0.0.0.0", () => {
   console.log("listen server on http://0.0.0.0:3000");
 });
