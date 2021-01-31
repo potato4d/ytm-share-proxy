@@ -1,9 +1,10 @@
-const packageJson = require("./package.json");
-const express = require("express");
+import express from 'express'
+import axios from "axios"
+import jsdom from "jsdom"
+import packageJson from './package.json'
+
 const app = express();
-const axios = require("axios");
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
+const { JSDOM } = jsdom
 
 const apiClient = axios.create({
   headers: {
@@ -22,7 +23,6 @@ app.get("/watch", async (req, res) => {
   try {
     const result = await apiClient.get(`https://youtube.com/watch?v=${v}`);
     const { window } = new JSDOM(result.data);
-    console.log(result.data);
     const { document } = window;
     const metaList = [
       ...Array.from(document.querySelectorAll("meta[property]")),
@@ -54,12 +54,8 @@ app.get("/watch", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.json({
-    version: packageJson.version,
-  });
-});
+app.use(express.static('./static'))
 
-app.listen(process.env.PORT || 3000, "0.0.0.0", () => {
+app.listen(~~`${process.env.PORT || 3000}`, "0.0.0.0", () => {
   console.log("listen server on http://0.0.0.0:3000");
 });

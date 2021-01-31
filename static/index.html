@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Music Share Proxy</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      color: #fff;
+      background: #030303;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      line-height: 2.0;
+      font-family: Avenir;
+    }
+    a {
+      color: inherit;
+    }
+    h1 {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    body > * {
+      min-width: 800px;
+      max-width: 100%;
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    input {
+      width: calc(100% - 110px);
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 2px;
+      padding: 0 10px;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    button {
+      width: 100px;
+      height: 40px;
+      appearance: none;
+      -webkit-appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 2px;
+      background: #FF0100;
+      cursor: pointer;
+    }
+    code {
+      font-family: Menlo, Consolas;
+      background: #111117;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin: 0 4px;
+      font-size: 0.75em;
+    }
+    footer {
+      text-align: center;
+      padding: 32px 0;
+      font-size: 0.8rem;
+      color: #999;
+    }
+    footer a {
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    html body .toast {
+      width: 120px;
+      min-width: 120px;
+      max-width: 120px;
+      height: 34px;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      background: #fff;
+      margin-top: 30px;
+      position: fixed;
+      left: calc(50% - 60px);
+      top: 0;
+      font-size: 12px;
+      font-weight: bold;
+      animation: slide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), slide 0.3s 1.3s cubic-bezier(0.34, 1.56, 0.64, 1) reverse forwards;
+    }
+
+    @keyframes slide {
+      0% { top: -84px }
+      100% { top: 0 }
+    }
+  </style>
+</head>
+<body>
+  <h1 style="margin-bottom: 0;">
+    <svg style="width: 48px; height: 48px;" fill="none" stroke="#FF0100" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
+    <span style="margin-left: 10px;display: inline-flex;padding-right: 34px;">YouTube Music Share Proxy</span>
+  </h1>
+  <p style="text-align: center;font-size: 12px;color: #999;padding-bottom: 24px;">OGP Proxy for YouTube Music</p>
+  <section>
+    <h2>Usage</h2>
+    <ol>
+      <li>Access to Music page(e.g. <code>https://music.youtube.com/watch?v=8tbD2TpKpiI</code>)</li>
+      <li>Replace <code>https://music.youtube.com</code> to <code>https://ytm-share.vercel.app</code> </li>
+      <li>Share it!</li>
+    </ol>
+  </section>
+  <section>
+    <h2>Convert URL</h2>
+    <form>
+      <input type="text" required placeholder="https://music.youtube.com/watch?v=">
+      <button type="submit">Get URL</button>
+    </form>
+  </section>
+  <footer>
+    <p><a href="https://github.com/potato4d/ytm-share" target="_blank" rel="noopener">src</a></p>
+  </footer>
+  <script>
+    document.querySelector('form').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const { state } = await navigator.permissions.query({name: "clipboard-write"})
+      if (!['prompt', 'granted'].includes(state)) {
+        return
+      }
+      const input = document.querySelector('input')
+      const text = `${input.value.replace('music.youtube.com', 'ytm-share.vercel.app')}`
+      navigator.clipboard.writeText(text)
+
+      const toast = document.createElement('div')
+      toast.classList.add('toast')
+      toast.id = `toast-${(Math.random()+'').replace('.', '')}`
+      toast.innerText = 'Copied!'
+      document.body.append(toast)
+      setTimeout(() => {
+        document.getElementById(toast.id).remove()
+      }, 2000)
+    })
+  </script>
+</body>
+</html>
