@@ -54,7 +54,9 @@ app.get("/watch", async (req, res) => {
   }
 });
 
-app.use(express.static('./static'))
+if (process.env.NODE_ENV != 'production') {
+  app.use(express.static('./public'))
+}
 
 app.listen(~~`${process.env.PORT || 3000}`, "0.0.0.0", () => {
   console.log("listen server on http://0.0.0.0:3000");
