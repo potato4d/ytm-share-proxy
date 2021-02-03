@@ -6,6 +6,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "./public/favicon.png",
+      "use": "@vercel/static"
+    },
+    {
       "src": "./index.ts",
       "use": "@vercel/node"
     }
@@ -14,6 +18,10 @@
     {
         "src": "/",
         "dest": "/public/index.html"
+    },
+    {
+        "src": "/favicon.png",
+        "dest": "/public/favicon.png"
     },
     {
         "src": "/(.*)",
