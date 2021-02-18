@@ -48,6 +48,7 @@ app.get("/watch", async (req, res) => {
 `.replace(/\n/g, "")
     );
   } catch (e) {
+    console.error(e);
     res.status(500);
     res.send("Internal Server Error");
   }
