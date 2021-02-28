@@ -155,7 +155,8 @@
         return
       }
       const input = document.querySelector('input')
-      const text = `${input.value.replace('music.youtube.com', 'ytm-share.vercel.app')}`
+      const v = new URLSearchParams((new URL(input.value)).search).get('v')
+      const text = `https://ytm-share.vercel.app/watch?v=${v}`
       navigator.clipboard.writeText(text)
 
       const toast = document.createElement('div')
